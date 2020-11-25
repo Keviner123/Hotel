@@ -1,0 +1,141 @@
+.header {
+  height: 125;
+  width: 100%;
+  background-color: #363636;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 1;
+}
+
+.body {
+  width: 100%;
+  height: 10000px;
+  background-color: #292929;
+  padding-top: 125px;
+}
+
+.HeaderContent {
+  width: 1390;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#HeaderLogo {
+  height: 70%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#HeaderLady {
+  height: 230px;
+  position: relative;
+}
+
+#SearchContainer {
+  height: 450px;
+  width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+#SearchContainerBackground {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 50%;
+}
+
+.DatePicker {
+}
+
+.DatePickerLabel {
+  color: white;
+  font-size: 20;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#SearchContainerContent {
+  height: 100%;
+  width: 1390px;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#RoomsContainer {
+  height: 100px;
+  width: 1390px;
+  position: absolute;
+  padding-top: 250px;
+  top: 0px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.SearchContainerText {
+  font-size: 50px;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  display: inline;
+}
+
+.RoomContainer {
+  height: 455px;
+  margin-bottom: 30px;
+  width: 255px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #3a3a3a;
+}
+
+.RoomDescriptionContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.RoomDescriptionTitle {
+  font-size: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: white;
+}
+
+.RoomDescriptionText {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
+  color: white;
+}
+
+.RoomImageContainer {
+  width: 100%;
+  height: 225px;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
