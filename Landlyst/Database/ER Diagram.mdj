@@ -76,6 +76,7 @@
 											"model": {
 												"$ref": "AAAAAAF19EdJ0ZCrTfw="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 565,
 											"top": 603,
@@ -90,6 +91,21 @@
 											},
 											"model": {
 												"$ref": "AAAAAAF19Nt/UpWTceQ="
+											},
+											"font": "Arial;13;0",
+											"left": 565,
+											"top": 603,
+											"width": 251.8671875,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAF1/l5D2EveVLM=",
+											"_parent": {
+												"$ref": "AAAAAAF15MOQkKi6j6M="
+											},
+											"model": {
+												"$ref": "AAAAAAF1/l5DoEvbMSc="
 											},
 											"font": "Arial;13;0",
 											"left": 565,
@@ -515,6 +531,21 @@
 										},
 										{
 											"_type": "ERDColumnView",
+											"_id": "AAAAAAF19DOezI8eaXg=",
+											"_parent": {
+												"$ref": "AAAAAAF19APtpY3Wqvs="
+											},
+											"model": {
+												"$ref": "AAAAAAF19DOekY8bFms="
+											},
+											"font": "Arial;13;0",
+											"left": 293,
+											"top": 483,
+											"width": 242.97412109375,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
 											"_id": "AAAAAAF19Ajts435EQQ=",
 											"_parent": {
 												"$ref": "AAAAAAF19APtpY3Wqvs="
@@ -524,7 +555,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 293,
-											"top": 483,
+											"top": 498,
 											"width": 242.97412109375,
 											"height": 13
 										},
@@ -539,7 +570,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 293,
-											"top": 498,
+											"top": 513,
 											"width": 242.97412109375,
 											"height": 13
 										},
@@ -551,21 +582,6 @@
 											},
 											"model": {
 												"$ref": "AAAAAAF19Ax1Eo4FpnY="
-											},
-											"font": "Arial;13;0",
-											"left": 293,
-											"top": 513,
-											"width": 242.97412109375,
-											"height": 13
-										},
-										{
-											"_type": "ERDColumnView",
-											"_id": "AAAAAAF19DOezI8eaXg=",
-											"_parent": {
-												"$ref": "AAAAAAF19APtpY3Wqvs="
-											},
-											"model": {
-												"$ref": "AAAAAAF19DOekY8bFms="
 											},
 											"font": "Arial;13;0",
 											"left": 293,
@@ -1861,9 +1877,9 @@
 										"$ref": "AAAAAAF19Leue5ROzkQ="
 									},
 									"font": "Arial;13;1",
-									"left": 272,
+									"left": 256,
 									"top": 101,
-									"width": 258.02685546875,
+									"width": 276.0859375,
 									"height": 13,
 									"text": "InvoiceStatus"
 								},
@@ -1887,9 +1903,9 @@
 												"$ref": "AAAAAAF19LfvSpRdsEY="
 											},
 											"font": "Arial;13;0",
-											"left": 277,
+											"left": 261,
 											"top": 124,
-											"width": 248.02685546875,
+											"width": 266.0859375,
 											"height": 13
 										},
 										{
@@ -1902,23 +1918,23 @@
 												"$ref": "AAAAAAF19LgeKpRkPGo="
 											},
 											"font": "Arial;13;0",
-											"left": 277,
+											"left": 261,
 											"top": 139,
-											"width": 248.02685546875,
+											"width": 266.0859375,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 272,
+									"left": 256,
 									"top": 119,
-									"width": 258.02685546875,
+									"width": 276.0859375,
 									"height": 38
 								}
 							],
 							"font": "Arial;13;0",
-							"left": 272,
+							"left": 256,
 							"top": 96,
-							"width": 258.02685546875,
+							"width": 276.0859375,
 							"height": 61,
 							"nameLabel": {
 								"$ref": "AAAAAAF19LeufJRPb4k="
@@ -1945,7 +1961,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 552,
+									"left": 553,
 									"top": 113,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1962,7 +1978,7 @@
 										"$ref": "AAAAAAF19NUwYJUlZeo="
 									},
 									"font": "Arial;13;0",
-									"left": 554,
+									"left": 556,
 									"top": 113,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -1997,7 +2013,7 @@
 								"$ref": "AAAAAAF19Leue5ROzkQ="
 							},
 							"lineStyle": 2,
-							"points": "529:134;576:134",
+							"points": "531:134;576:134",
 							"nameLabel": {
 								"$ref": "AAAAAAF19NUwYJUmINA="
 							},
@@ -2603,7 +2619,7 @@
 							},
 							"name": "RoomNumber",
 							"type": "INTEGER",
-							"length": 0,
+							"length": "255",
 							"primaryKey": true
 						},
 						{
@@ -2630,6 +2646,15 @@
 						},
 						{
 							"_type": "ERDColumn",
+							"_id": "AAAAAAF1/l5DoEvbMSc=",
+							"_parent": {
+								"$ref": "AAAAAAF15MOQj6i2BOM="
+							},
+							"name": "RoomName",
+							"type": "VARCHAR"
+						},
+						{
+							"_type": "ERDColumn",
 							"_id": "AAAAAAF15MWi5KjdH/w=",
 							"_parent": {
 								"$ref": "AAAAAAF15MOQj6i2BOM="
@@ -2644,7 +2669,9 @@
 							"_parent": {
 								"$ref": "AAAAAAF15MOQj6i2BOM="
 							},
-							"name": "MaxGuests"
+							"name": "MaxGuests",
+							"type": "INTEGER",
+							"length": "255"
 						}
 					]
 				},
@@ -3010,6 +3037,17 @@
 						},
 						{
 							"_type": "ERDColumn",
+							"_id": "AAAAAAF19DOekY8bFms=",
+							"_parent": {
+								"$ref": "AAAAAAF19APto43S2J8="
+							},
+							"name": "HotelNumber",
+							"type": "INTEGER",
+							"length": 0,
+							"foreignKey": true
+						},
+						{
+							"_type": "ERDColumn",
 							"_id": "AAAAAAF19Ajte432WmQ=",
 							"_parent": {
 								"$ref": "AAAAAAF19APto43S2J8="
@@ -3037,17 +3075,6 @@
 							"name": "PhoneNumber",
 							"type": "VARCHAR",
 							"length": "255"
-						},
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAF19DOekY8bFms=",
-							"_parent": {
-								"$ref": "AAAAAAF19APto43S2J8="
-							},
-							"name": "HotelNumber",
-							"type": "INTEGER",
-							"length": 0,
-							"foreignKey": true
 						}
 					]
 				},
@@ -3688,7 +3715,8 @@
 								"$ref": "AAAAAAF19Leue5RMG7Q="
 							},
 							"name": "InvoiceStatusNumber",
-							"type": "INTEGER"
+							"type": "INTEGER",
+							"primaryKey": true
 						},
 						{
 							"_type": "ERDColumn",

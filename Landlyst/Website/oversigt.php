@@ -1,7 +1,6 @@
 ﻿<head>
     <title>Landlyst Casino Hotel</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js"
         integrity="sha512-yfhC0kG8fvDDLG3xpuZ4fZ2zCoZKHzkoO/mCFdDiUzwKktWnYkXZwNjW1qyoMwnf1uRi8LelY5wDNIA30Xz7Dw=="
         crossorigin="anonymous"></script>
@@ -63,32 +62,61 @@
 
 <body>
 
-    <div class="Header">
-        <div class="HeaderContent">
-            <img id="HeaderLogo" src="Assets/Images/Logo.png" />
-            <img id="HeaderLady" src="Assets/Images/Casinodame.png" /></div>
-    </div>
+    <?php include 'header.php';?>
+
     </div>
     <div class="Body">
         <div id="RoomsContainer">
 
-            <?php for ($x = 0; $x <= 100; $x++) {
-                print '
-             <div class="RoomContainer">
-             <img class="RoomImageContainer" src="Assets/Images/Rooms/1.jpg">
-             <div class="RoomDescriptionContainer">
-                 <div style="display: flex;flex-direction: column;width:90%">
-                     <p class="RoomDescriptionTitle">Gambling Suite</p>
-                     <p class="RoomDescriptionText">2 værelser</p>
-                     <p class="RoomDescriptionText">1 køkken</p>
-                     <p class="RoomDescriptionText">1 TV</p>
-                 </div>
-                 <button style="width: 125px;" type="button" class="btn btn-success">Book værelse</button>
+            <?php
 
-             </div>
-         </div>
-            ';
-            } ?>
+
+$servername = "localhost";
+$username = "php";
+$password = "G96ByQgwPe7npnfb";
+$dbname = "hotels";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+
+$sql = "SELECT * FROM room";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+
+    print '
+    <div class="RoomContainer">
+    <img class="RoomImageContainer" src="Assets/Images/Rooms/'.$row["RoomNumber"].'.jpg">
+    <div class="RoomDescriptionContainer">
+        <div style="display: flex;flex-direction: column;width:90%">
+            <p class="RoomDescriptionTitle">'.$row["RoomName"].'</p>
+            <p class="RoomDescriptionText">'.$row["MaxGuests"].' værelser</p>
+            <p class="RoomDescriptionText">1 køkken</p>
+            <p class="RoomDescriptionText">1 TV</p>
+        </div>
+        <button style="width: 125px;" type="button" class="btn btn-success">Book værelse</button>
+
+    </div>
+</div>
+   ';
+
+  }
+} else {
+  echo "0 results";
+}
+$conn->close();
+
+
+
+            ?>
         </div>
     </div>
 
@@ -150,3 +178,5 @@
         autoclose: true
     });
 </script>
+
+

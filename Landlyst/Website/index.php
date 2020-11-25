@@ -2,14 +2,9 @@
     <title>Landlyst Casino Hotel</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js"
-        integrity="sha512-yfhC0kG8fvDDLG3xpuZ4fZ2zCoZKHzkoO/mCFdDiUzwKktWnYkXZwNjW1qyoMwnf1uRi8LelY5wDNIA30Xz7Dw=="
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js" integrity="sha512-yfhC0kG8fvDDLG3xpuZ4fZ2zCoZKHzkoO/mCFdDiUzwKktWnYkXZwNjW1qyoMwnf1uRi8LelY5wDNIA30Xz7Dw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <style type="text/css">
         ::-webkit-scrollbar {
             width: 5px;
@@ -62,12 +57,8 @@
 </head>
 
 <body>
+    <?php include 'header.php';?>
 
-    <div class="Header">
-        <div class="HeaderContent">
-            <img id="HeaderLogo" src="Assets/Images/Logo.png" />
-            <img id="HeaderLady" src="Assets/Images/Casinodame.png" /></div>
-    </div>
     </div>
     <div class="Body">
         <div id="SearchContainer">
@@ -82,13 +73,11 @@
                 <div style="display:flex">
                     <div>
                         <label class="DatePickerLabel" for="exampleInputEmail1">Check-in dato</label>
-                        <input class="form-control DatePicker" type="text" id="fromDate" class="datepicker"
-                            name="updatedDate" />
+                        <input class="form-control DatePicker" type="text" id="fromDate" class="datepicker" name="updatedDate" />
                     </div>
                     <div style="margin-left: 20px;">
                         <label class="DatePickerLabel" for="exampleInputEmail1">Check-ud dato</label>
-                        <input class="form-control DatePicker" type="text" id="toDate" class="datepicker"
-                            name="updatedDate" />
+                        <input class="form-control DatePicker" type="text" id="toDate" class="datepicker" name="updatedDate" />
                     </div>
                 </div>
                 <button onclick="ValidateForm()" style="width: 200px;" type="button" class="btn btn-success">Tjek
@@ -121,18 +110,17 @@
     typewriter.typeString('bedste')
         .pauseFor(2500)
         .start();
-
 </script>
 
 <script>
     function ValidateForm() {
-        if($("#fromDate").datepicker('getDate') == null && $("#toDate").datepicker('getDate') == null){
+        if ($("#fromDate").datepicker('getDate') == null && $("#toDate").datepicker('getDate') == null) {
             var myToast = Toastify({
-            text: "Udfyld venligtst check-in og check-ud dato.",
-            duration: 5000,
-            backgroundColor: "#ffc107",
-        }).showToast();
-        } else{
+                text: "Udfyld venligtst check-in og check-ud dato.",
+                duration: 5000,
+                backgroundColor: "#ffc107",
+            }).showToast();
+        } else {
             window.location.replace("oversigt.php");
         }
 
