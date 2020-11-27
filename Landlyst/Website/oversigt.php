@@ -56,66 +56,107 @@
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="Assets/Library/datepicker/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="Assets/Library/toastify/toastify.css">
-    <script type="text/javascript" src="Assets/Library/datepicker/js/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <script type="text/javascript" src="Assets/Library/toastify/toastify.js"></script>
+
+    <script>
+    function CreateReservation(RoomNumber){
+        alert(RoomNumber);
+        document.getElementsByClassName("RoomContainer")[RoomNumber].remove();
+    }
+    </script>
+
 </head>
 
 <body>
 
-    <?php include 'header.php';?>
+    <?php include 'header.php'; ?>
 
     </div>
+    
     <div class="Body">
         <div id="RoomsContainer">
 
             <?php
+            $servername = 'localhost';
+            $username = 'php';
+            $password = 'G96ByQgwPe7npnfb';
+            $dbname = 'hotels';
 
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            // Check connection
+            if ($conn->connect_error) {
+                die('Connection failed: ' . $conn->connect_error);
+            }
 
-$servername = "localhost";
-$username = "php";
-$password = "G96ByQgwPe7npnfb";
-$dbname = "hotels";
+            function GetRoomAttributes($Room, $SQLConnection)
+            {
+                $sql =
+                    "
+        select
+            m.RoomAttributeName
+        from
+            roomattribute m
+            inner join roomattributes am on m.RoomAttritubeNumber = am.RoomAttritubeNumber
+            inner join room a on am.RoomNumber = a.RoomNumber
+        where
+            a.RoomNumber = " . $Room;
+                $result = $SQLConnection->query($sql);
+                $rows = [];
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        $rows[] = '-' . $row['RoomAttributeName'];
+                    }
+                }
+                return implode('<br>', $rows);
+            }
 
+            $sql = 'SELECT * FROM room';
+            $result = $conn->query($sql);
 
-
-$sql = "SELECT * FROM room";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-
-    print '
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    print '
+    
     <div class="RoomContainer">
-    <img class="RoomImageContainer" src="Assets/Images/Rooms/'.$row["RoomNumber"].'.jpg">
+    <img class="RoomImageContainer" src="Assets/Images/Rooms/' .
+                        $row['RoomNumber'] .
+                        '.jpg">
     <div class="RoomDescriptionContainer">
+    
         <div style="display: flex;flex-direction: column;width:90%">
-            <p class="RoomDescriptionTitle">'.$row["RoomName"].'</p>
-            <p class="RoomDescriptionText">'.$row["MaxGuests"].' værelser</p>
-            <p class="RoomDescriptionText">1 køkken</p>
-            <p class="RoomDescriptionText">1 TV</p>
-        </div>
-        <button style="width: 125px;" type="button" class="btn btn-success">Book værelse</button>
+       
 
+
+            <p class="RoomDescriptionTitle">' .
+                        $row['RoomName'] .
+                        '</p>
+            <p class="RoomDescriptionText" style="font-size:15px"> <i class="fas fa-user" style="color:#218838"></i> ' .
+                        $row['MaxGuests'] .
+                        ' gæster</p>
+            <p class="RoomDescriptionText" style="font-size:13px">' .
+                        GetRoomAttributes($row['RoomNumber'], $conn) .
+                        '</p>
+
+        </div>
+
+        <div style="display: flex;flex-direction: column;width:90%">
+            <p class="RoomDescriptionTitle" style="font-size:15px"><i class="fas fa-file-signature"></i>
+            Pris pr. uge: 500kr</p>
+        </div>
+        <button onclick="CreateReservation('.$row['RoomNumber'].')" style="width: 125px;" type="button" class="btn btn-success">Book værelse</button>
     </div>
 </div>
    ';
-
-  }
-} else {
-  echo "0 results";
-}
-$conn->close();
-
-
-
+                }
+            } else {
+                echo '0 results';
+            }
+            $conn->close();
             ?>
         </div>
     </div>
