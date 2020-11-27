@@ -732,20 +732,35 @@
 											"top": 359,
 											"width": 221.2841796875,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAF2CXlkkGSNRMM=",
+											"_parent": {
+												"$ref": "AAAAAAF19B0VzY5E+bk="
+											},
+											"model": {
+												"$ref": "AAAAAAF2CXlkS2SKHpA="
+											},
+											"font": "Arial;13;0",
+											"left": 869,
+											"top": 374,
+											"width": 221.2841796875,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 864,
 									"top": 279,
 									"width": 231.2841796875,
-									"height": 98
+									"height": 113
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 864,
 							"top": 256,
 							"width": 231.2841796875,
-							"height": 121,
+							"height": 136,
 							"nameLabel": {
 								"$ref": "AAAAAAF19B0VzI5D8ak="
 							},
@@ -3082,6 +3097,16 @@
 								"$ref": "AAAAAAF19B0VzI5A9jo="
 							},
 							"name": "Salt",
+							"type": "VARCHAR",
+							"length": "255"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAF2CXlkS2SKHpA=",
+							"_parent": {
+								"$ref": "AAAAAAF19B0VzI5A9jo="
+							},
+							"name": "Email",
 							"type": "VARCHAR",
 							"length": "255"
 						}

@@ -80,7 +80,7 @@
                         <input class="form-control DatePicker" type="text" id="toDate" class="datepicker" name="updatedDate" />
                     </div>
                 </div>
-                <button onclick="ValidateForm()" style="width: 200px;" type="button" class="btn btn-success">Tjek
+                <button onclick="ValidateForm()" style="width: 200px;" type="button" class="btn btn-success shadow-none">Tjek
                     tilgængelighed</button>
 
             </div>

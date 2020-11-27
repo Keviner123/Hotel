@@ -78,13 +78,7 @@
         <div id="RoomsContainer">
 
             <?php
-            $servername = 'localhost';
-            $username = 'php';
-            $password = 'G96ByQgwPe7npnfb';
-            $dbname = 'hotels';
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
+			require 'DatabaseConnect.php';
             // Check connection
             if ($conn->connect_error) {
                 die('Connection failed: ' . $conn->connect_error);
@@ -135,7 +129,7 @@
             <p class="RoomDescriptionTitle">' .
                         $row['RoomName'] .
                         '</p>
-            <p class="RoomDescriptionText" style="font-size:15px"> <i class="fas fa-user" style="color:#218838"></i> ' .
+            <p class="RoomDescriptionText" style="font-size:15px"> <i class="fas fa-user" style="color:#C82506"></i> ' .
                         $row['MaxGuests'] .
                         ' gæster</p>
             <p class="RoomDescriptionText" style="font-size:13px">' .
@@ -148,7 +142,7 @@
             <p class="RoomDescriptionTitle" style="font-size:15px"><i class="fas fa-file-signature"></i>
             Pris pr. uge: 500kr</p>
         </div>
-        <button onclick="CreateReservation('.$row['RoomNumber'].')" style="width: 125px;" type="button" class="btn btn-success">Book værelse</button>
+        <button onclick="CreateReservation('.$row['RoomNumber'].')" style="width: 125px;" type="button" class="btn btn-success shadow-none">Book værelse</button>
     </div>
 </div>
    ';
