@@ -5,50 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js" integrity="sha512-yfhC0kG8fvDDLG3xpuZ4fZ2zCoZKHzkoO/mCFdDiUzwKktWnYkXZwNjW1qyoMwnf1uRi8LelY5wDNIA30Xz7Dw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <style type="text/css">
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 10px;
-        }
-
-        ::-webkit-scrollbar-button {
-            width: 0px;
-            height: 0px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #ae1002;
-            border: 0px none #ffffff;
-            border-radius: 100px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ae1002;
-        }
-
-        ::-webkit-scrollbar-thumb:active {
-            background: #000000;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #292929;
-            border: 0px none #ffffff;
-            border-radius: 0px;
-        }
-
-        ::-webkit-scrollbar-track:hover {
-            background: #3a3a3a;
-        }
-
-        ::-webkit-scrollbar-track:active {
-            background: #333333;
-        }
-
-        ::-webkit-scrollbar-corner {
-            background: transparent;
-        }
-    </style>
-
+    <link rel="stylesheet" href="CSS/Scrollbar.css">
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="Assets/Library/datepicker/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="Assets/Library/toastify/toastify.css">

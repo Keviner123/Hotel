@@ -1,18 +1,22 @@
 <?php
+session_start();
+
 include_once('../DatabaseConnect.php'); 
 
 $Email = $_POST['Email'];
 $Password = $_POST['Password'];
 
+$query = "SELECT * FROM `guest` WHERE `Email`= '".$Email."'";
 
-
-
-$sql = "SELECT * FROM `guest` WHERE `Email`= '".$_POST['Email']."'";
-$result = $conn->query($sql);
+$result = mysqli_query($conn, $query);
 $row = $result->fetch_assoc();
 
+if(crypt($Password,$row[Salt]) == $row['Password']){
+    print(TRUE);
+    $_SESSION['GuestNumber'] = $row['GuestNumber'];
+    $_SESSION['Email'] = $row['Email'];
 
-
-print_r($row["Email"]);
-
+} else {
+    print(FALSE);
+}
 ?>
