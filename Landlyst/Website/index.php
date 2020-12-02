@@ -78,7 +78,7 @@
                 backgroundColor: "#ffc107",
             }).showToast();
         } else {
-            window.location.replace("oversigt.php");
+            window.location.replace('oversigt.php?Checkindate='+$("#fromDate")[0].value+'&Checkoutdate='+$("#toDate")[0].value);
         }
 
 

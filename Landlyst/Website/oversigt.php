@@ -64,169 +64,182 @@
 
         
     }
+
+    function GetRooms(Guests){
+        var form = new FormData();
+        form.append("MaxGuests", Guests);
+
+        var settings = {
+        "url": "http://localhost/hotel/Endpoints/getrooms.php",
+        "method": "POST",
+        "timeout": 0,
+        dataType: "json",
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "contentType": false,
+        "data": form,
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            for (let index = 0; index < response.length; index++) {
+                Attributes = (response[index].Attributes.join(", "));
+                CreateRoomContainer(response[index].RoomName, response[index].RoomNumber, response[index].MaxGuests, Attributes, parseInt(response[index].Rate)+response[index].AttributesPrices);
+            }
+        });
+    }
+
+    function ClearRooms(){
+        $( "#RoomsContainer" )[0].innerHTML = '';
+    }
+
+    function CreateRoomContainer(RoomName, RoomNumber, MaxGuests, Attributes, Rate) {
+          var RoomContainer = document.createElement('div');
+          RoomContainer.className = "RoomContainer";
+
+          var RoomImageContainer = document.createElement('img');
+          RoomImageContainer.className = "RoomImageContainer";
+          RoomImageContainer.src = "Assets/Images/Rooms/"+RoomNumber+".jpg"
+          RoomContainer.appendChild(RoomImageContainer);
+
+          var RoomDescriptionContainer = document.createElement('div');
+          RoomDescriptionContainer.className = "RoomDescriptionContainer";
+          RoomContainer.appendChild(RoomDescriptionContainer);
+
+          var RoomDescriptionContainerInside = document.createElement('div');
+          RoomDescriptionContainerInside.style = "display: flex;flex-direction: column;width:90%";
+          RoomDescriptionContainer.appendChild(RoomDescriptionContainerInside);
+
+          var RoomDescriptionTitle = document.createElement('p');
+          RoomDescriptionTitle.className = "RoomDescriptionTitle";
+          RoomDescriptionTitle.textContent = RoomName;
+          RoomDescriptionContainerInside.appendChild(RoomDescriptionTitle);
+
+          var RoomDescriptionMaxGuests = document.createElement('p');
+          RoomDescriptionMaxGuests.className = "RoomDescriptionText";
+          RoomDescriptionMaxGuests.textContent = MaxGuests+" gæster";
+          RoomDescriptionContainerInside.appendChild(RoomDescriptionMaxGuests);
+
+          var RoomDescriptionAttributes = document.createElement('p');
+          RoomDescriptionAttributes.className = "RoomDescriptionText";
+          RoomDescriptionAttributes.textContent = Attributes;
+          RoomDescriptionContainerInside.appendChild(RoomDescriptionAttributes);
+
+          var PricerContainer = document.createElement('div');
+          PricerContainer.style="display: flex;flex-direction: column;width:90%";
+          RoomDescriptionContainer.appendChild(PricerContainer);
+
+          var PricerContainerText = document.createElement('p');
+          PricerContainerText.className = "RoomDescriptionTitle";
+          PricerContainerText.style="font-size:15px";
+          PricerContainerText.textContent = "Pris pr. dag: "+Rate+" kr.";
+          PricerContainer.appendChild(PricerContainerText);
+
+          var BookingButton = document.createElement('button');
+          BookingButton.style= "width: 125px;";
+          BookingButton.type = "button";
+          BookingButton.className = "btn btn-success shadow-none";
+          BookingButton.textContent= "Book værelse";
+          BookingButton.onclick = function() {this.disabled=true;AttachRoomToReservation(1);};
+          RoomDescriptionContainer.appendChild(BookingButton);
+
+          $( "#RoomsContainer" )[0].appendChild(RoomContainer);
+    }
+
+
     </script>
 
 </head>
 
 <body>
-
-    <?php include 'header.php'; ?>
-
-    </div>
-    
-    <div class="Body">
-        <div id="RoomsContainer">
-
-            <div id="FilterBar">
-            
-            <div style="height:100%;width:100%;">
-                <p id="FilterBarTitle">Søg efter værelser på Landlyst</p>
-                <p id="FilterBarDescription">Indtast dine datoer for at se de seneste priser og tilbud for værelser på plandlyst</p>
-            </div>
-            <div style="height:100%;width:100%;display: flex;align-items: flex-end;justify-content: space-between;">
-        
-                   <div>
-                        <label class="DatePickerLabel" for="exampleInputEmail1">Check-in dato</label>
-                        <input class="form-control DatePicker" type="text" id="fromDate" class="datepicker" name="updatedDate" />
-                    </div>
-
-                    <div>
-                        <label class="DatePickerLabel" for="exampleInputEmail1">Check-in dato</label>
-                        <input class="form-control DatePicker" type="text" id="toDate" class="datepicker" name="updatedDate" />
-                    </div>
-
-                    <div>
-                        <label class="DatePickerLabel" for="exampleInputEmail1">Voksne</label>
-                        <select class="form-control PersonPicker" id="exampleFormControlSelect1">
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="DatePickerLabel"  for="exampleInputEmail1">Børn</label>
-                        <select class="form-control PersonPicker" data-width="50px" id="exampleFormControlSelect1">
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <button onclick="CreateUser()" type="button" class="btn btn-success shadow-none">Check tilgængelighed</button>
-                    </div>
-        </div>
-            </div>
-
-            <?php
-            require 'DatabaseConnect.php';
-
-            function GetRoomAttributesPrice($Room, $SQLConnection){
-                $sql = "select
-                m.RoomAttributeRate
-            from
-                roomattribute m
-                inner join roomattributes am on m.RoomAttritubeNumber = am.RoomAttritubeNumber
-                inner join room a on am.RoomNumber = a.RoomNumber
-            where
-                a.RoomNumber = ".$Room;
-                $result = $SQLConnection->query($sql);
-                $rows = [];
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $rows[] = $row['RoomAttributeRate'];
-                    }
-                }
-                return array_sum($rows);
-            }
-
-            function GetRoomAttributes($Room, $SQLConnection)
-            {
-                $sql =
-                    "
-        select
-            m.RoomAttributeName
-        from
-            roomattribute m
-            inner join roomattributes am on m.RoomAttritubeNumber = am.RoomAttritubeNumber
-            inner join room a on am.RoomNumber = a.RoomNumber
-        where
-            a.RoomNumber = " . $Room;
-                $result = $SQLConnection->query($sql);
-                $rows = [];
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $rows[] = '-' . $row['RoomAttributeName'];
-                    }
-                }
-                return implode('<br>', $rows);
-            }
-
-            $sql = 'SELECT * FROM room';
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    print '
-    <div class="RoomContainer">
-    <img class="RoomImageContainer" src="Assets/Images/Rooms/' .
-                        $row['RoomNumber'] .
-                        '.jpg">
-    <div class="RoomDescriptionContainer">
-    
-        <div style="display: flex;flex-direction: column;width:90%">
+   <?php include 'header.php'; ?>
+   </div>
+   <div class="Body">
        
 
+   <div class="PageContainer">
+    <div id="FilterBar">
+                <div style="height:100%;width:100%;">
+                <p id="FilterBarTitle">Søg efter værelser på Landlyst</p>
+                <p id="FilterBarDescription">Indtast dine datoer for at se de seneste priser og tilbud for værelser på plandlyst</p>
+                </div>
+                <div style="height:100%;width:100%;display: flex;align-items: flex-end;justify-content: space-between;">
+                <div>
+                    <label class="DatePickerLabel" for="exampleIn½utEmail1">Check-in dato</label>
+                    <input value="<?php print date('d/m/Y'); ?>" class="form-control DatePicker" type="text" id="fromDate" class="datepicker" name="updatedDate" />
+                </div>
+                <div>
+                    <label class="DatePickerLabel" for="exampleInputEmail1">Check-in dato</label>
+                    <input class="form-control DatePicker" type="text" id="toDate" class="datepicker" name="updatedDate" />
+                </div>
+                <div>
+                    <label class="DatePickerLabel" for="exampleInputEmail1">Voksne</label>
+                    <select class="form-control PersonPicker" id="Adults">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="DatePickerLabel"  for="exampleInputEmail1">Børn</label>
+                    <select class="form-control PersonPicker" data-width="50px" id="exampleFormControlSelect1">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div>
+                    <button onclick="GetAvailableRooms()" type="button" class="btn btn-success shadow-none">Check tilgængelighed</button>
+                </div>
+                </div>
+            </div>
 
-            <p class="RoomDescriptionTitle">' .
-                        $row['RoomNumber'] .
-                        '</p>
-            <p class="RoomDescriptionText" style="font-size:15px"> <i class="fas fa-user" style="color:#C82506"></i> ' .
-                        $row['MaxGuests'] .
-                        ' gæster</p>
-            <p class="RoomDescriptionText" style="font-size:13px">' .
-                        GetRoomAttributes($row['RoomNumber'], $conn) .
-                        '</p>
-
-        </div>
-
-        <div style="display: flex;flex-direction: column;width:90%">
-            <p class="RoomDescriptionTitle" style="font-size:15px"><i class="fas fa-file-signature"></i>
-            Pris pr. dag: '.($row['Rate']+GetRoomAttributesPrice($row['RoomNumber'], $conn)).' kr</p>
-        </div>
-        <button onclick="this.disabled=true;AttachRoomToReservation(' .
-                        $row['RoomNumber'] .
-                        ')" style="width: 125px;" type="button" class="btn btn-success shadow-none">Book værelse</button>
-    </div>
-</div>
-                ';
-                }
-            }
-            $conn->close();
-            ?>
-        </div>
-    </div>
-
-    </div>
+      <div id="RoomsContainer">
+      </div>
+   </div>
+   </div>
 </body>
 
 
-
+<script>
+    function GetAvailableRooms(){
+        ClearRooms();
+        GetRooms($( "#Adults" ).val());
+    }
+</script>
 
 <script>
-    $('#fromDate').datepicker({
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}
+</script>
+
+<script>
+
+    $("#fromDate").datepicker({
+        format: 'dd/mm/yyyy',
         autoclose: true
-    });
-    $('#toDate').datepicker({
+    }).datepicker("update", "<?php print($_GET["Checkindate"]); ?>"); 
+    $("#toDate").datepicker({
+        format: 'dd/mm/yyyy',
         autoclose: true
-    });
+    }).datepicker("update", "<?php print($_GET["Checkoutdate"]); ?>"); 
+</script>
+
+<script>
+GetRooms(1);
 </script>

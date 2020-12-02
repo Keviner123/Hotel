@@ -9,7 +9,7 @@ function CreateUser(){
 	form.append("Password", $("#Password").val());
 
 	var settings = {
-	  "url": "/Endpoints/signup.php",
+	  "url": "Endpoints/signup.php",
 	  "method": "POST",
 	  "timeout": 0,
 	  "processData": false,
@@ -48,7 +48,7 @@ function Login(){
 
 
 	var settings = {
-	  "url": "/Endpoints/login.php",
+	  "url": "Endpoints/login.php",
 	  "method": "POST",
 	  "timeout": 0,
 	  "processData": false,

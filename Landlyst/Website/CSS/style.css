@@ -1,206 +1,221 @@
 @font-face {
     font-family: 'HelveticaNeue';
     src: url('HelveticaNeue.ttf') format('truetype');
-  }  
+}
 
 .header {
-  height: 125;
-  width: 100%;
-  background-color: #363636;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  z-index: 1;
-  box-shadow: 0 0 20px 4px #00000070;
+    height: 125;
+    width: 100%;
+    background-color: #363636;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+    box-shadow: 0 0 20px 4px #00000070;
 }
 
 .body {
-  width: 100%;
-  height: 10000px;
-  background-color: #292929;
-  padding-top: 125px;
+    width: 100%;
+    height: 10000px;
+    background-color: #292929;
+    padding-top: 125px;
 }
 
 .HeaderContent {
-  width: 1390;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
+    width: 1390;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 #HeaderLogo {
-  height: 70%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #HeaderLady {
-  height: 100%;
-  position: absolute;
-  transform: translateX(50%);
-  opacity: 70%;
+    height: 100%;
+    position: absolute;
+    transform: translateX(50%);
+    opacity: 70%;
 }
 
 #SearchContainer {
-  height: 450px;
-  width: 100%;
-  position: relative;
-  z-index: 0;
+    height: 450px;
+    width: 100%;
+    position: relative;
+    z-index: 0;
 }
 
 #SearchContainerBackground {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  opacity: 50%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 50%;
 }
 
 .DatePicker {
-    width:350px;
+    width: 350px;
 }
-
 
 .table-condensed {
-  width: 350px;
-  height: 350px;
+    width: 350px;
+    height: 350px;
 }
-
 
 .DatePickerLabel {
-  color: white;
-  font-size: 20;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 20;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.PersonPicker{
-    width:150px;
+.PersonPicker {
+    width: 150px;
 }
 
 #SearchContainerContent {
-  height: 100%;
-  width: 1390px;
-  position: absolute;
-  top: 0px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+    height: 100%;
+    width: 1390px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 #RoomsContainer {
-  height: 100px;
-  width: 1390px;
-  position: absolute;
-  padding-top: 150px;
-  top: 0px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    height: 100px;
+    width: 1390px;
+    position: absolute;
+    padding-top: 365px;
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .SearchContainerText {
-  font-size: 50px;
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bold;
-  display: inline;
+    font-size: 50px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    display: inline;
 }
 
 .RoomContainer {
-  margin-bottom: 30px;
-  width: 255px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #3a3a3a;
-  box-shadow: 0 0 15px 3px #00000082;
+    margin-bottom: 30px;
+    width: 255px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3a3a3a;
+    box-shadow: 0 0 15px 3px #00000082;
+}
+
+.PageContainer {
+    height: 100px;
+    width: 1390px;
+    position: absolute;
+    padding-top: 150px;
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .RoomDescriptionContainer {
-  height: 210px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 10px;
+    height: 210px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
 }
 
 .RoomDescriptionTitle {
-  font-size: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bold;
-  color: white;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: white;
 }
 
 .RoomDescriptionText {
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  font-family: Arial;
-  color: white;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    color: white;
 }
 
 .RoomImageContainer {
-  width: 100%;
-  height: 225px;
-  object-fit: cover;
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
 }
 
 body,
 html {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .btn-success,
 .btn-success:hover,
 .btn-success:active,
 .btn-success:visited {
-  background-color: #c82506 !important;
-  border: 0;
+    background-color: #c82506 !important;
+    border: 0;
 }
 
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:active,
 .btn-secondary:visited {
-  background-color: #989898 !important;
-  border: 0;
+    background-color: #989898 !important;
+    border: 0;
 }
 
 .loginbar {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-.loginbar > * {
-  margin-left: 10px;
+.loginbar>* {
+    margin-left: 10px;
 }
 
 #FilterBar {
-  width: 100%;
-  height: 185px;
-  background-color: #3a3a3a;
-  margin-bottom: 25px;
-  display: flex;
-  flex-direction: column;
-  padding: 35px;
+    width: 100%;
+    height: 185px;
+    background-color: #3a3a3a;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    z-index: 1;
 }
 
-#FilterBarTitle{
+#FilterBarTitle {
     font-size: 20;
     color: #FFFFFF;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -208,10 +223,9 @@ html {
     line-height: 0px;
 }
 
-#FilterBarDescription{
+#FilterBarDescription {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: lighter;
     font-size: 20;
-    color:#FFFFFF;
+    color: #FFFFFF;
 }
-
