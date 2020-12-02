@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 02, 2020 at 07:38 AM
+-- Generation Time: Dec 02, 2020 at 01:18 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -54,7 +54,8 @@ INSERT INTO `guest` (`GuestNumber`, `Firstname`, `Lastname`, `PhoneNumber`, `Pas
 (106, NULL, NULL, NULL, '', '', ''),
 (107, NULL, NULL, NULL, '', '', ''),
 (108, NULL, NULL, NULL, 'JtFj5blAb1bCQ', 'JtucB2Mi3x', 'undefined'),
-(109, NULL, NULL, NULL, 'RWppIbqDkMdUM', 'RWUb5pSMcT', 'hemmelige@xn--lrke-voa.dk');
+(109, NULL, NULL, NULL, 'RWppIbqDkMdUM', 'RWUb5pSMcT', 'hemmelige@xn--lrke-voa.dk'),
+(110, NULL, NULL, NULL, 'EAuO9sgNsgg1g', 'EAgLoNyfXc', 'kevin@kevinfrost.com');
 
 -- --------------------------------------------------------
 
@@ -318,7 +319,17 @@ INSERT INTO `roomattributes` (`RoomAttribute`, `RoomNumber`, `RoomAttritubeNumbe
 (49, 44, 2),
 (51, 45, 2),
 (53, 46, 2),
-(54, 46, 3);
+(54, 46, 3),
+(63, 47, 2),
+(64, 47, 1),
+(65, 48, 2),
+(66, 48, 3),
+(67, 49, 2),
+(68, 49, 5),
+(69, 50, 2),
+(70, 50, 1),
+(71, 50, 3),
+(72, 51, 2);
 
 --
 -- Indexes for dumped tables
@@ -368,7 +379,7 @@ ALTER TABLE `roomattributes`
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `GuestNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `GuestNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `reservation`
@@ -392,7 +403,7 @@ ALTER TABLE `roomattribute`
 -- AUTO_INCREMENT for table `roomattributes`
 --
 ALTER TABLE `roomattributes`
-  MODIFY `RoomAttribute` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `RoomAttribute` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
