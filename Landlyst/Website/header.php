@@ -84,9 +84,21 @@ print('
                     </div>
 					<div class="loginbar">');
 					if(isset($_SESSION["Email"])){
-						print('<p style="font-size:25px;color:white;margin-bottom:0px">Velkommen '.$_SESSION["Email"].'</p><a href="Endpoints/logout.php" class="btn btn-danger">Log ud</a>');
+						print('
+						<p style="font-size:25px;color:white;margin-bottom:0px">Velkommen '.$_SESSION["Email"].'</p>
+
+						<a href="guestrooms.php">
+							<button type="button" class="btn btn-secondary shadow-none">Mine reservationer</button>
+						</a>
+
+						<a href="Endpoints/logout.php">
+							<button type="button" class="btn btn-success shadow-none">Log ud</button>
+						</a>
+
+						');
 					} else{
-						print('<input style="width:230px" type="email" class="form-control" id="Email" placeholder="Email">
+						print('
+						<input style="width:230px" type="email" class="form-control" id="Email" placeholder="Email">
 						<input type="password" style="width:230px" type="email" class="form-control" id="Password" placeholder="Password">
 						<button onclick="Login()" type="button" class="btn btn-secondary shadow-none">Login</button>
 						<button onclick="CreateUser()" type="button" class="btn btn-success shadow-none">Opret konto</button>');

@@ -4,9 +4,12 @@ session_start();
 include_once('../DatabaseConnect.php'); 
 
 $GuestNumber = $_SESSION['GuestNumber'];
+$ArrivalDate = $_POST['ArrivalDate'];
+$Depaturedate = $_POST['Depaturedate'];
+
 
 $query = "INSERT INTO `reservation` (`ReservationNumber`, `HotelNumber`, `GuestNumber`, `ArrivalDate`, `Depaturedate`) 
-VALUES (NULL, '1', '".$GuestNumber."', '2020-11-10', '2020-11-11')";
+VALUES (NULL, '1', '".$GuestNumber."', '".$ArrivalDate."', '".$Depaturedate."')";
 
 
 $result = mysqli_query($conn, $query);
