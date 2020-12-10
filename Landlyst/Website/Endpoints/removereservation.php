@@ -8,15 +8,20 @@ $GuestNumber = $_SESSION['GuestNumber'];
 
 
 function CheckIfUserHasReserver($RoomNumber, $GuestNumber, $conn){
-    $query = "
+    $stmt = $conn -> prepare("
     SELECT
         *
     FROM
         reservationroomlines
     INNER JOIN reservation ON reservationroomlines.ReservationNumber = reservation.ReservationNumber
     WHERE
-        reservation.GuestNumber = '".$GuestNumber."' AND reservationroomlines.RoomNumber = '".$RoomNumber."'";
-    $result = mysqli_query($conn, $query);
+        reservation.GuestNumber = ? AND reservationroomlines.RoomNumber = ?
+    ");
+
+    $stmt->bind_param("ss", $GuestNumber, $RoomNumber);
+    $stmt-> execute();
+    
+    $result = $stmt->get_result();
     
     if ($result->num_rows > 0) {
         return(TRUE);
@@ -26,7 +31,8 @@ function CheckIfUserHasReserver($RoomNumber, $GuestNumber, $conn){
 }
 
 if(CheckIfUserHasReserver($RoomNumber, $GuestNumber, $conn)){
-    $query = "DELETE FROM reservationroomlines WHERE RoomNumber=".$RoomNumber;
-    $result = mysqli_query($conn, $query);
+    $stmt = $conn->prepare("DELETE FROM reservationroomlines WHERE RoomNumber = ?");
+    $stmt->bind_param("i", $RoomNumber);
+    $stmt->execute();
 }
 ?>

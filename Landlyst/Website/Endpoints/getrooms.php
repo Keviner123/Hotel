@@ -41,15 +41,21 @@ $Bookings = array();
 
 
 function GetRoomAttributesPrice($Room, $SQLConnection){
-    $sql = "select
+    $stmt = $SQLConnection -> prepare("
+    select
     m.RoomAttributeRate
-from
-    roomattribute m
-    inner join roomattributes am on m.RoomAttritubeNumber = am.RoomAttritubeNumber
-    inner join room a on am.RoomNumber = a.RoomNumber
-where
-    a.RoomNumber = ".$Room;
-    $result = $SQLConnection->query($sql);
+    from
+        roomattribute m
+        inner join roomattributes am on m.RoomAttritubeNumber = am.RoomAttritubeNumber
+        inner join room a on am.RoomNumber = a.RoomNumber
+    where
+        a.RoomNumber = ?
+    ");
+
+    $stmt->bind_param("s", $Room);
+    $stmt-> execute();
+    $result =  $stmt->get_result();
+
     $rows = [];
 
     if ($result->num_rows > 0) {
@@ -62,17 +68,25 @@ where
 
 function GetRoomAttributes($Room, $SQLConnection)
     {
-        $sql =
-            "
-            select
-                m.RoomAttributeName
-            from
-                roomattribute m
-                inner join roomattributes am on m.RoomAttritubeNumber = am.RoomAttritubeNumber
-                inner join room a on am.RoomNumber = a.RoomNumber
-            where
-                a.RoomNumber = " . $Room;
-        $result = $SQLConnection->query($sql);
+        $stmt = $SQLConnection -> prepare("
+        SELECT
+            m.RoomAttributeName 
+        FROM
+            roomattribute m 
+            INNER JOIN
+            roomattributes am 
+            ON m.RoomAttritubeNumber = am.RoomAttritubeNumber 
+            INNER JOIN
+            room a 
+            ON am.RoomNumber = a.RoomNumber 
+        WHERE
+            a.RoomNumber = ?
+        ");
+
+        $stmt->bind_param("s", $Room);
+        $stmt-> execute();
+        $result =  $stmt->get_result();
+
         $Attributes = array();
 
         if ($result->num_rows > 0) {
@@ -89,13 +103,15 @@ function GetRoomBookings($SQLConnection)
 {
     $Bookings = array();
 
-    $sql = "
+    $stmt = $SQLConnection -> prepare("
     SELECT *
     FROM reservationroomlines
     INNER JOIN reservation
     ON reservationroomlines.ReservationNumber = reservation.ReservationNumber;
-    ";
-    $result = $SQLConnection->query($sql);
+    ");
+    $stmt-> execute();
+    $result =  $stmt->get_result();
+
     $Attributes = array();
 
     if ($result->num_rows > 0) {
@@ -140,8 +156,10 @@ function FilterBookedRooms($Bookings, $Rooms){
     // return($Rooms);
 }
 
-$sql = 'SELECT * FROM `room` WHERE room.MaxGuests >= '.$_POST["MaxGuests"];
-$result = $conn->query($sql);
+$stmt = $conn -> prepare('SELECT * FROM `room` WHERE room.MaxGuests >= ?');
+$stmt->bind_param("s", $_POST["MaxGuests"]);
+$stmt-> execute();
+$result =  $stmt->get_result();
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -150,8 +168,6 @@ if ($result->num_rows > 0) {
         array_push($Rooms, new Room($row['RoomNumber'], $row['RoomName'], $row['Rate'],$row['MaxGuests'], $Attributes, $AttributesPrices));
     }
 }
-
-
 
 
 $Bookings = GetRoomBookings($conn);

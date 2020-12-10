@@ -17,7 +17,13 @@
             return($Months[$Month-1]);
         }
 
-        function PrintGuestRoomContainer($RoomNumber, $RoomName, $CheckinDay, $CheckoutDay, $CheckinMonth, $CheckoutMonth, $CheckinDayName, $CheckoutDayName, $MaxGuests){
+        function PrintGuestRoomContainer($RoomNumber,$RoomName, $ArrivalDate, $DepatureDate, $MaxGuests){
+                $CheckinDay = explode("-", $ArrivalDate)[2];
+                $CheckoutDay = explode("-", $DepatureDate)[2];
+                $CheckinMonth = explode("-", $ArrivalDate)[1];
+                $CheckoutMonth = explode("-", $DepatureDate)[1];
+                $CheckinDayName = date('l', strtotime($ArrivalDate));
+                $CheckoutDayName = date('l', strtotime($DepatureDate));
             print'
                 <div class="BookingListContainer">
                 <img class="BookingListImage" src="/Assets/Images/Rooms/'.$RoomNumber.'.jpg"></img>
@@ -27,7 +33,29 @@
                         <div style="height:100%;width:100%">
                             <p class="RoomDescriptionText">'.$MaxGuests.' gæster</p>
                         </div>
-                        <button onclick="CancelBooking('.$RoomNumber.', this)" type="button" class="btn btn-secondary shadow-none" style="width:100px">Annuler</button>
+                        <div>';
+            
+
+
+            if (strtotime($ArrivalDate) < time() AND strtotime($DepatureDate) < time()) {
+
+
+            } else if(strtotime($ArrivalDate) < time() AND strtotime($DepatureDate) > time()){
+                print('
+                <button onclick="CancelBooking('.$RoomNumber.', this)" type="button" class="btn btn-success shadow-none" style="width:100px">Check ud</button>
+                ');
+        
+            }
+                
+             else{
+
+                print('
+                 <button onclick="CancelBooking('.$RoomNumber.', this)" type="button" class="btn btn-secondary shadow-none" style="width:100px">Annuler</button>
+                ');    
+            }
+
+            print'
+                        </div>
                     </div>
                     <div class="BookingListDateContainer">
                         <p class="BookingListDateText BookingListTitleText">Check-in</p>
@@ -61,16 +89,19 @@
     
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $CheckinDay = explode("-", $row["ArrivalDate"])[2];
-                $CheckoutDay = explode("-", $row["DepatureDate"])[2];
-                $CheckinMonth = explode("-", $row["ArrivalDate"])[1];
-                $CheckoutMonth = explode("-", $row["DepatureDate"])[1];
-                $CheckinDayName = date('l', strtotime($row["ArrivalDate"]));
-                $CheckoutDayName = date('l', strtotime($row["DepatureDate"]));
+
                 $MaxGuests = $row["MaxGuests"];
 
-                PrintGuestRoomContainer($row["RoomNumber"],$row["RoomName"], $CheckinDay, $CheckoutDay, $CheckinMonth, $CheckoutMonth, $CheckinDayName, $CheckoutDayName, $MaxGuests);
+                PrintGuestRoomContainer($row["RoomNumber"],$row["RoomName"],$row["ArrivalDate"],$row["DepatureDate"], $MaxGuests);
             }
+        } else{
+            print('
+            <lottie-player src="Assets/Animations/404.json"  background="transparent" speed="1"  style="width: 1390px; height: 450px;" loop autoplay></lottie-player>
+            <div style="width:100%;heigth:200px;display:flex;align-items:center;flex-direction:column">
+            <p style="font-weight:bold;color:#898989;margin-bottom: 0;">Det ser ikke ud til at du har lavet nogle reservationer!</p>
+            <p style="color:#898989">Gå tilbage og opret en reservation.!</p>
+            </div>
+            ');
         }
         ?>
       </div>
@@ -101,7 +132,7 @@
             }).showToast();
         });
 
-        $(self.parentNode.parentNode.parentNode).animate({
+        $(self.parentNode.parentNode.parentNode.parentNode).animate({
             padding: "0px",
             'margin-top':'-200px',
             'opacity': 0,

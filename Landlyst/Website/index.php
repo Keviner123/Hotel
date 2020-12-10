@@ -1,6 +1,6 @@
 ﻿<head>
     <title>Landlyst Casino Hotel</title>
-    <?php include 'libaries.php'; ?>
+    <?php include 'libaries.php'; ?>  
 </head>
 
 <body>

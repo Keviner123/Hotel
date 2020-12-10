@@ -6,12 +6,9 @@ include_once('../DatabaseConnect.php');
 $ReservationNumber = $_POST['ReservationNumber'];
 $RoomNumber = $_POST['RoomNumber'];
 
-
-$query = "INSERT INTO `reservationroomlines` (`RoomNumber`, `ReservationNumber`) 
-VALUES ($RoomNumber, $ReservationNumber)";
-
-
-$result = mysqli_query($conn, $query);
+$stmt = $conn -> prepare('INSERT INTO reservationroomlines (RoomNumber, ReservationNumber) VALUES (?,?)');
+$stmt -> bind_param('ii', $RoomNumber, $ReservationNumber);
+$stmt-> execute();
 
 print(TRUE);
 ?>

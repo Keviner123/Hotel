@@ -24,6 +24,8 @@ print('
 <script type="text/javascript" src="Assets/Library/AOS/aos.js"></script>
 <link rel="stylesheet" href="Assets/Library/AOS/aos.css">
 
+<!-- Lottie -->
+<script type="text/javascript" src="Assets/Library/Lottie/lottie-player.js"></script>
 
 <!-- Stylesheets -->
 <link rel="stylesheet" href="CSS/style.css">

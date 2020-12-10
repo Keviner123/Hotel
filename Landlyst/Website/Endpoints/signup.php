@@ -12,19 +12,20 @@ $Email = $_POST['Email'];
 $salt = random_alphanumeric_string(10);
 $Password = crypt($Password,$salt);
 
+$stmt = $conn -> prepare("SELECT * FROM guest WHERE Email=? LIMIT 1");
 
-$user_check_query = "SELECT * FROM guest WHERE Email='$Email' LIMIT 1";
-$result = mysqli_query($conn, $user_check_query);
-$user = mysqli_fetch_assoc($result);
+$stmt->bind_param("s", $Email);
+$stmt-> execute();
 
+$result =  $stmt->get_result();
+$user = $result->fetch_assoc();
 
 if ($user) {
     print(FALSE);
 } else {
-	$query = "INSERT INTO guest (Password, Salt, Email) 
-			VALUES ( '".$Password."', '".$salt."', '".$Email."')";
-
-	mysqli_query($conn, $query);
+	$stmt = $conn -> prepare('INSERT INTO guest (Password, Salt, Email) VALUES (?,?,?)');
+	$stmt->bind_param("sss", $Password, $salt, $Email);
+	$stmt-> execute();
 	print(TRUE);
 }
 

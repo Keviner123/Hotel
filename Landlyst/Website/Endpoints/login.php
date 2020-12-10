@@ -3,20 +3,18 @@ session_start();
 
 include_once('../DatabaseConnect.php'); 
 
-$Email = $_POST['Email'];
-$Password = $_POST['Password'];
+$stmt = $conn -> prepare("SELECT * FROM guest WHERE Email = ?");
+$stmt->bind_param("s", $_POST['Email']);
+$stmt-> execute();
 
-$query = "SELECT * FROM `guest` WHERE `Email`= '".$Email."'";
-
-$result = mysqli_query($conn, $query);
+$result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
-if(crypt($Password,$row[Salt]) == $row['Password']){
+if(crypt($_POST['Password'],$row['Salt']) == $row['Password']){
     print(TRUE);
     $_SESSION['GuestNumber'] = $row['GuestNumber'];
     $_SESSION['Email'] = $row['Email'];
-
 } else {
-    print(FALSE);
+    print(false);
 }
 ?>
