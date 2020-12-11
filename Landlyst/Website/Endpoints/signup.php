@@ -1,6 +1,16 @@
 <?php
+ /**
+ * Creates a user
+ */
+
 include_once('../DatabaseConnect.php'); 
 
+
+/**
+ * random_alphanumeric_string
+ * Generated a random strign with a given length
+ * @param  mixed $length The length of the random string
+ */
 function random_alphanumeric_string($length) {
     $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return substr(str_shuffle($chars), 0, $length);

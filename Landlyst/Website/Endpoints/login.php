@@ -1,4 +1,7 @@
 <?php
+ /**
+ * Validate the users login and create a session.
+ */
 session_start();
 
 include_once('../DatabaseConnect.php'); 

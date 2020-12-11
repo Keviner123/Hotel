@@ -1,4 +1,7 @@
 <?php
+ /**
+ * Create a reservation with a given arrival date and depature date.
+ */
 session_start();
 
 include_once('../DatabaseConnect.php'); 

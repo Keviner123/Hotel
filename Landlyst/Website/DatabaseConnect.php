@@ -1,4 +1,6 @@
  <?php
+//This file would be stored outside of the hosted webfolder.
+
 $servername = 'localhost';
 $username = 'php';
 $password = 'G96ByQgwPe7npnfb';

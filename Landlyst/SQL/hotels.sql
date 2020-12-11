@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 11, 2020 at 07:46 AM
+-- Generation Time: Dec 11, 2020 at 12:58 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -21,6 +21,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotels`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `EmployeeNumber` int(11) NOT NULL,
+  `HotelNumber` int(11) NOT NULL,
+  `Firstname` varchar(255) NOT NULL,
+  `Lastname` varchar(255) NOT NULL,
+  `PhoneNumber` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employerole`
+--
+
+CREATE TABLE `employerole` (
+  `RoleNumber` int(11) NOT NULL,
+  `EmployeeNumber` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -72,6 +97,30 @@ INSERT INTO `hotel` (`HotelNumber`, `HotelName`, `Address`, `Website`, `PhoneNum
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `InvoiceNumber` int(11) NOT NULL,
+  `ReservationNumber` varchar(255) NOT NULL,
+  `Total` varchar(255) NOT NULL,
+  `InvoiceStatusNumber` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoicestatus`
+--
+
+CREATE TABLE `invoicestatus` (
+  `InvoiceStatusNumber` int(11) NOT NULL,
+  `InvoiceStatusName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `lis`
 -- (See below for the actual view)
 --
@@ -109,19 +158,6 @@ CREATE TABLE `reservation` (
   `DepatureDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `reservation`
---
-
-INSERT INTO `reservation` (`ReservationNumber`, `HotelNumber`, `GuestNumber`, `ArrivalDate`, `DepatureDate`) VALUES
-(511, 1, 111, '2020-12-08', '2020-12-09'),
-(512, 1, 111, '2020-12-10', '2020-12-10'),
-(513, 1, 111, '2020-12-10', '2020-12-17'),
-(514, 1, 111, '2020-12-24', '2020-12-31'),
-(515, 1, 111, '2020-12-10', '2020-12-25'),
-(516, 1, 111, '2020-12-17', '2020-12-24'),
-(517, 1, 111, '2020-12-10', '2020-12-31');
-
 -- --------------------------------------------------------
 
 --
@@ -136,18 +172,16 @@ CREATE TABLE `reservationroomlines` (
   `CheckoutDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `reservationroomlines`
+-- Table structure for table `role`
 --
 
-INSERT INTO `reservationroomlines` (`ReservationRoomLineNumber`, `RoomNumber`, `ReservationNumber`, `isCanceled`, `CheckoutDate`) VALUES
-(48, 2, 511, 0, NULL),
-(49, 3, 512, 0, NULL),
-(50, 6, 513, 0, '2020-12-10'),
-(51, 8, 514, 1, NULL),
-(52, 27, 515, 0, '2020-12-10'),
-(53, 44, 516, 1, NULL),
-(54, 1, 517, 0, '2020-12-10');
+CREATE TABLE `role` (
+  `RoleNumber` int(11) NOT NULL,
+  `RoleName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -336,22 +370,64 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`EmployeeNumber`),
+  ADD KEY `HotelNumber` (`HotelNumber`);
+
+--
+-- Indexes for table `employerole`
+--
+ALTER TABLE `employerole`
+  ADD KEY `EmployeeNumber` (`EmployeeNumber`),
+  ADD KEY `RoleNumber` (`RoleNumber`);
+
+--
 -- Indexes for table `guest`
 --
 ALTER TABLE `guest`
   ADD PRIMARY KEY (`GuestNumber`);
 
 --
+-- Indexes for table `hotel`
+--
+ALTER TABLE `hotel`
+  ADD PRIMARY KEY (`HotelNumber`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`InvoiceNumber`);
+
+--
+-- Indexes for table `invoicestatus`
+--
+ALTER TABLE `invoicestatus`
+  ADD PRIMARY KEY (`InvoiceStatusNumber`);
+
+--
 -- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`ReservationNumber`);
+  ADD PRIMARY KEY (`ReservationNumber`),
+  ADD KEY `GuestNumber` (`GuestNumber`),
+  ADD KEY `HotelNumber` (`HotelNumber`);
 
 --
 -- Indexes for table `reservationroomlines`
 --
 ALTER TABLE `reservationroomlines`
-  ADD PRIMARY KEY (`ReservationRoomLineNumber`);
+  ADD PRIMARY KEY (`ReservationRoomLineNumber`),
+  ADD KEY `RoomNumber` (`RoomNumber`),
+  ADD KEY `ReservationNumber` (`ReservationNumber`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`RoleNumber`);
 
 --
 -- Indexes for table `room`
@@ -369,11 +445,19 @@ ALTER TABLE `roomattribute`
 -- Indexes for table `roomattributes`
 --
 ALTER TABLE `roomattributes`
-  ADD PRIMARY KEY (`RoomAttribute`);
+  ADD PRIMARY KEY (`RoomAttribute`),
+  ADD KEY `RoomAttritubeNumber` (`RoomAttritubeNumber`),
+  ADD KEY `RoomNumber` (`RoomNumber`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `EmployeeNumber` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guest`
@@ -382,16 +466,34 @@ ALTER TABLE `guest`
   MODIFY `GuestNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `InvoiceNumber` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `invoicestatus`
+--
+ALTER TABLE `invoicestatus`
+  MODIFY `InvoiceStatusNumber` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `ReservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=518;
+  MODIFY `ReservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=539;
 
 --
 -- AUTO_INCREMENT for table `reservationroomlines`
 --
 ALTER TABLE `reservationroomlines`
-  MODIFY `ReservationRoomLineNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `ReservationRoomLineNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `RoleNumber` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roomattribute`
@@ -404,6 +506,44 @@ ALTER TABLE `roomattribute`
 --
 ALTER TABLE `roomattributes`
   MODIFY `RoomAttribute` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `employee`
+--
+ALTER TABLE `employee`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`HotelNumber`) REFERENCES `hotel` (`HotelNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `employerole`
+--
+ALTER TABLE `employerole`
+  ADD CONSTRAINT `employerole_ibfk_1` FOREIGN KEY (`EmployeeNumber`) REFERENCES `employee` (`EmployeeNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `employerole_ibfk_2` FOREIGN KEY (`RoleNumber`) REFERENCES `role` (`RoleNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`GuestNumber`) REFERENCES `guest` (`GuestNumber`),
+  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`HotelNumber`) REFERENCES `hotel` (`HotelNumber`);
+
+--
+-- Constraints for table `reservationroomlines`
+--
+ALTER TABLE `reservationroomlines`
+  ADD CONSTRAINT `reservationroomlines_ibfk_1` FOREIGN KEY (`RoomNumber`) REFERENCES `room` (`RoomNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `reservationroomlines_ibfk_2` FOREIGN KEY (`ReservationNumber`) REFERENCES `reservation` (`ReservationNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `roomattributes`
+--
+ALTER TABLE `roomattributes`
+  ADD CONSTRAINT `roomattributes_ibfk_1` FOREIGN KEY (`RoomAttritubeNumber`) REFERENCES `roomattribute` (`RoomAttritubeNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `roomattributes_ibfk_2` FOREIGN KEY (`RoomNumber`) REFERENCES `room` (`RoomNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,4 +1,7 @@
 <?php
+ /**
+ * Attach a hotel room to an existing reservation 
+ */
 session_start();
 
 include_once('../DatabaseConnect.php'); 

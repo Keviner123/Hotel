@@ -1,4 +1,7 @@
 <?php
+ /**
+ * Cancel the users booked room.
+ */
 session_start();
 
 include_once('../DatabaseConnect.php'); 
@@ -7,6 +10,14 @@ $RoomNumber = $_POST['RoomNumber'];
 $GuestNumber = $_SESSION['GuestNumber'];
 
 
+/**
+ * CheckIfUserHasReserver
+ *
+ * @param  mixed $RoomNumber The room room number that the user wants to check out of
+ * @param  mixed $GuestNumber The users id
+ * @param  mixed $conn The connection string
+ * @return bool Returns if the user really owns the reserved room.
+ */
 function CheckIfUserHasReserver($RoomNumber, $GuestNumber, $conn){
     $stmt = $conn -> prepare("
     SELECT

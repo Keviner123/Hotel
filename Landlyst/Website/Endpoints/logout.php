@@ -1,4 +1,8 @@
 <?php
+ /**
+ * Reset all session details and log the users out
+ */
+
 // Initialize the session
 session_start();
  

@@ -1,9 +1,14 @@
 <?php
+ /**
+ * Gets the available rooms along with their price and attributes.
+ */
 session_start();
-
 include_once('../DatabaseConnect.php'); 
 
 
+/**
+ * Rooms in the hotel
+ */
 class Room {
     public $RoomNumber;
     public $RoomName;
@@ -20,7 +25,9 @@ class Room {
     }
 }
 
-
+/**
+ * Booking of room 
+ */
 class Booking {
     public $RoomNumber;
     public $ArrivalDate;
@@ -34,13 +41,18 @@ class Booking {
 }
   
 
-
 $Rooms = array();
 $Bookings = array();
 
 
-
-function GetRoomAttributesPrice($Room, $SQLConnection){
+/**
+ * GetRoomAttributesPrice
+ * Get the prices of attributesa on a given hotel room
+ * @param  mixed $Room Room id
+ * @param  mixed $SQLConnection Connection string
+ */
+function GetRoomAttributesPrice($Room, $SQLConnection)
+{
     $stmt = $SQLConnection -> prepare("
     select
     m.RoomAttributeRate
@@ -66,39 +78,48 @@ function GetRoomAttributesPrice($Room, $SQLConnection){
     return array_sum($rows);
 }
 
+/**
+ * GetRoomAttributes
+ * Get the room attributes for a given hotel room
+ * @param  mixed $Room Room id
+ * @param  mixed $SQLConnection Connection string
+ */
 function GetRoomAttributes($Room, $SQLConnection)
-    {
-        $stmt = $SQLConnection -> prepare("
-        SELECT
-            m.RoomAttributeName 
-        FROM
-            roomattribute m 
-            INNER JOIN
-            roomattributes am 
-            ON m.RoomAttritubeNumber = am.RoomAttritubeNumber 
-            INNER JOIN
-            room a 
-            ON am.RoomNumber = a.RoomNumber 
-        WHERE
-            a.RoomNumber = ?
-        ");
+{
+    $stmt = $SQLConnection -> prepare("
+    SELECT
+        m.RoomAttributeName 
+    FROM
+        roomattribute m 
+        INNER JOIN
+        roomattributes am 
+        ON m.RoomAttritubeNumber = am.RoomAttritubeNumber 
+        INNER JOIN
+        room a 
+        ON am.RoomNumber = a.RoomNumber 
+    WHERE
+        a.RoomNumber = ?
+    ");
 
-        $stmt->bind_param("s", $Room);
-        $stmt-> execute();
-        $result =  $stmt->get_result();
+    $stmt->bind_param("s", $Room);
+    $stmt-> execute();
+    $result =  $stmt->get_result();
 
-        $Attributes = array();
+    $Attributes = array();
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                array_push($Attributes,$row['RoomAttributeName']);
-            }
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            array_push($Attributes,$row['RoomAttributeName']);
         }
-        return($Attributes);
     }
+    return($Attributes);
+}
 
-
-
+/**
+ * GetRoomBookings
+ * Get all the current booked rooms
+ * @param  mixed $SQLConnection Connection string
+ */
 function GetRoomBookings($SQLConnection)
 {
     $Bookings = array();
@@ -122,7 +143,16 @@ function GetRoomBookings($SQLConnection)
     return($Bookings);
 }
 
-function GetBookedRooms($Bookings, $ArrivalDate, $DepatureDate){
+
+/**
+ * FindOverlappingRooms
+ * Removes all the reservations in the database that overlaps with the dates
+ * @param  mixed $Bookings List of booked rooms in the database
+ * @param  mixed $ArrivalDate From date
+ * @param  mixed $DepatureDate To date
+ */
+function FindOverlappingRooms($Bookings, $ArrivalDate, $DepatureDate)
+{
     foreach ($Bookings as $Booking => $BookingContent) {
         if ((strtotime($BookingContent->ArrivalDate) <= strtotime($DepatureDate)) && 
         (strtotime($BookingContent->DepatureDate) >= strtotime($ArrivalDate))) {
@@ -133,9 +163,15 @@ function GetBookedRooms($Bookings, $ArrivalDate, $DepatureDate){
     return($Bookings);
 }
 
-function FilterBookedRooms($Bookings, $Rooms){
-
-    
+/**
+ * FilterBookedRooms
+ * Filter the available rooms away from the user
+ * @param  mixed $Bookings Overlapping bookings
+ * @param  mixed $Rooms Hotel rooms
+ * @return void
+ */
+function FilterBookedRooms($Bookings, $Rooms)
+{
     foreach ($Rooms as $Room => $RoomContent){
         foreach ($Bookings as $Booking => $BookingContent) {
             if($RoomContent->RoomNumber == $BookingContent->RoomNumber){
@@ -145,7 +181,6 @@ function FilterBookedRooms($Bookings, $Rooms){
     }
 
 
-
     $TempRooms = array();
 
     foreach ($Rooms as $Room){
@@ -153,14 +188,16 @@ function FilterBookedRooms($Bookings, $Rooms){
     }
 
     return($TempRooms);
-    // return($Rooms);
 }
 
+
+// Get all the hotel rooms where the users specified amount of guets match.
 $stmt = $conn -> prepare('SELECT * FROM `room` WHERE room.MaxGuests >= ?');
 $stmt->bind_param("s", $_POST["MaxGuests"]);
 $stmt-> execute();
 $result =  $stmt->get_result();
 
+//If there are any matches, we go ahead and get the attributes and attribute prices on those rooms
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $Attributes = (GetRoomAttributes($row['RoomNumber'], $conn));
@@ -169,9 +206,13 @@ if ($result->num_rows > 0) {
     }
 }
 
-
+//Get all the currently booked rooms
 $Bookings = GetRoomBookings($conn);
-$Bookings = GetBookedRooms($Bookings, $_POST["ArrivalDate"], $_POST["Depaturedate"]);
+
+//Find all the reservations in the database that overlaps with the users input
+$Bookings = FindOverlappingRooms($Bookings, $_POST["ArrivalDate"], $_POST["Depaturedate"]);
+
+//Match those reservations up agains the rooms, and remove the reserved rooms.
 $Rooms = FilterBookedRooms($Bookings, $Rooms);
 
 $conn->close();
