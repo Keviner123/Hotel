@@ -289,12 +289,16 @@ function findGetParameter(parameterName) {
 
 <script>
     $("#fromDate").datepicker({
-        format: 'dd/mm/yyyy',
         autoclose: true,
+        format: 'dd/mm/yyyy',
+        startDate: '-0d',
+        changeMonth: true
     }).datepicker("update", "<?php print($_GET["Checkindate"]); ?>"); 
     $("#toDate").datepicker({
+        autoclose: true,
         format: 'dd/mm/yyyy',
-        autoclose: true
+        startDate: '-0d',
+        changeMonth: true
     }).datepicker("update", "<?php print($_GET["Checkoutdate"]); ?>"); 
 </script>
 

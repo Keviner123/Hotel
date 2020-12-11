@@ -10,8 +10,6 @@
       <div class="PageContainer">
 
         <?php
-        session_start();
-
         function MonthDateToText($Month){
             $Months = array("Januar", "Februar", "Marts", "April","Maj", "June", "July", "August","September", "Oktober", "November", "December");
             return($Months[$Month-1]);
@@ -42,7 +40,7 @@
 
             } else if(strtotime($ArrivalDate) < time() AND strtotime($DepatureDate) > time()){
                 print('
-                <button onclick="CancelBooking('.$RoomNumber.', this)" type="button" class="btn btn-success shadow-none" style="width:100px">Check ud</button>
+                <button onclick="CheckoutBooking('.$RoomNumber.', this)" type="button" class="btn btn-success shadow-none" style="width:100px">Check ud</button>
                 ');
         
             }
@@ -81,7 +79,9 @@
         ON reservationroomlines.ReservationNumber = reservation.ReservationNumber
         INNER JOIN room
         ON reservationroomlines.RoomNumber = room.RoomNumber
-        WHERE reservation.GuestNumber = ".$_SESSION['GuestNumber'].";";
+        WHERE isCanceled = 0 AND DepatureDate >= CURDATE()  AND CheckoutDate IS NULL 
+        AND reservation.GuestNumber = ".$_SESSION['GuestNumber'].";
+        ;";
         
         $result = $conn->query($sql);
 
@@ -127,6 +127,40 @@
         $.ajax(settings).done(function(response) {
             new Toastify({
                 text: "Rum fjernet fra din booking",
+                duration: 5000,
+                backgroundColor: "#28a745",
+            }).showToast();
+        });
+
+        $(self.parentNode.parentNode.parentNode.parentNode).animate({
+            padding: "0px",
+            'margin-top':'-200px',
+            'opacity': 0,
+            'height':0,
+        }, 500, function() {
+            $(this).remove();      
+        });
+
+    }
+
+    function CheckoutBooking(RoomNumber, self){
+        var form = new FormData();
+
+        form.append("RoomNumber", RoomNumber);
+
+        var settings = {
+            "url": "/Endpoints/checkoutbooking.php",
+            "method": "POST",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "data": form,
+            "contentType": false,
+        };
+
+        $.ajax(settings).done(function(response) {
+            new Toastify({
+                text: "Checked ud",
                 duration: 5000,
                 backgroundColor: "#28a745",
             }).showToast();

@@ -127,12 +127,15 @@
     $('#fromDate').datepicker({
         autoclose: true,
         format: 'dd/mm/yyyy',
-
+        startDate: '-0d',
+        changeMonth: true
     }).datepicker("setDate",'now');
 
     $('#toDate').datepicker({
         autoclose: true,
-        format: 'dd/mm/yyyy'
+        format: 'dd/mm/yyyy',
+        startDate: '-0d',
+        changeMonth: true
     }).datepicker("setDate",'now');
 </script>
 

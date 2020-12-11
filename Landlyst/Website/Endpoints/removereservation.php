@@ -30,8 +30,9 @@ function CheckIfUserHasReserver($RoomNumber, $GuestNumber, $conn){
     }
 }
 
+
 if(CheckIfUserHasReserver($RoomNumber, $GuestNumber, $conn)){
-    $stmt = $conn->prepare("DELETE FROM reservationroomlines WHERE RoomNumber = ?");
+    $stmt = $conn->prepare("UPDATE reservationroomlines SET isCanceled = 1 WHERE RoomNumber = ?");
     $stmt->bind_param("i", $RoomNumber);
     $stmt->execute();
 }
